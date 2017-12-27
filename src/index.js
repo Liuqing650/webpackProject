@@ -10,6 +10,7 @@ function component() {
   element.appendChild(button);
   // Note that because a network request is involved, some indication
   // of loading would need to be shown in a production-level site/app.
+  // test
   button.onclick = e => import(/* webpackChunkName: "print" */ './print').then(module => {
     var print = module.default;
     print();
