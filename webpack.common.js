@@ -1,31 +1,29 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-
 module.exports = {
   entry: {
-    // index: './src/index.js',
-    app: './src/index.js',
-    // print: './src/print.js'
+    index: './src/index.js',
+    another: './src/another-module.js'
   },
-  devtool: 'inline-source-map', // 追踪到错误和警告在源代码中的原始位置，开发时使用
   devServer: {
     contentBase: './dist',
     hot: true
   },
   plugins: [
-    new CleanWebpackPlugin(['dist']), // 打包的时候清除dist文件
+    new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
-      title: 'Output Management'
+      title: 'Production'
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new UglifyJSPlugin()
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'common' // 指定公共 bundle 的名称。
+    })
   ],
   output: {
-    filename: '[name].bundle.js',
+    filename: '[name].js', // 删除了 bundle
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/'
   },

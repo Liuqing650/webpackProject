@@ -1,9 +1,11 @@
-import _ from 'lodash';
+// import _ from 'lodash';
 import './style.css';
 // import Icon from './icon.png';
 // import printMe from './print.js';
 import { cube } from './math.js';
-
+if (process.env.NODE_ENV !== 'production') {
+  console.log('Looks like we are in development mode!');
+}
 function component() {
   // var element = document.createElement('div');
   // var btn = document.createElement('button');
@@ -23,9 +25,9 @@ function component() {
     'Hello webpack!',
     '5 cubed is equal to ' + cube(5)
   ].join('\n\n');
-  return element;
+  return preElement;
 }
-// let element = component(); // 当 print.js 改变导致页面重新渲染时，重新获取渲染的元素
+let element = component(); // 当 print.js 改变导致页面重新渲染时，重新获取渲染的元素
 document.body.appendChild(component());
 
 // if (module.hot) {
