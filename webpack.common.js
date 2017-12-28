@@ -4,8 +4,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 module.exports = {
   entry: {
-    index: './src/index.js',
-    another: './src/another-module.js'
+    main: './src/index.js',
+    vendor: [
+      'lodash'
+    ]
   },
   devServer: {
     contentBase: './dist',
@@ -14,16 +16,17 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
-      title: 'Production'
+      title: 'Caching'
     }),
-    new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor'
+    }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'common' // 指定公共 bundle 的名称。
     })
   ],
   output: {
-    filename: '[name].js', // 删除了 bundle
+    filename: '[name].[chunkhash].js', // 删除了 bundle
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/'
   },
