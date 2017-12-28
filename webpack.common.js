@@ -3,33 +3,30 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 module.exports = {
-  entry: {
-    main: './src/index.js',
-    vendor: [
-      'lodash'
-    ]
-  },
+  entry: './src/index.js',
   devServer: {
     contentBase: './dist',
-    hot: true
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
       title: 'Caching'
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor'
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'common' // 指定公共 bundle 的名称。
     })
   ],
   output: {
-    filename: '[name].[chunkhash].js', // 删除了 bundle
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '/'
+    filename: 'webpack-numbers.js',
+    library: 'webpackNumbers',
+    libraryTarget: 'umd'
   },
+  // externals: {
+  //   lodash: {
+  //     commonjs: 'lodash',
+  //     commonjs2: 'lodash',
+  //     amd: 'lodash',
+  //     root: '_'
+  //   }
+  // },
   module: {
     rules: [
       {
